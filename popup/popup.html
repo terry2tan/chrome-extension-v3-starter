@@ -4,8 +4,27 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="popup.css">
     <title>Chrome Addon v3: popup</title>
+    <style>
+        body {
+            background-color: white;
+            width: 400px;
+            height: 400px;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+        }
+        #selected-text {
+            font-size: 14px;
+            color:#000;
+            line-height: 1.5;
+        }
+    </style>
 </head>
 <body>
-    This is the <span class="special-text">HTML</span> body of the addon.
+    <button id="extract">总结</button>
+    <div id='selected-text' ></div>
+    <script src="popup.js"></script>
+
 </body>
 </html>

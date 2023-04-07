@@ -10,3 +10,21 @@ importScripts('service-worker-utils.js')
 // If you want to import a file that is deeper in the file hierarchy of your
 // extension, simply do `importScripts('path/to/file.js')`.
 // The path should be relative to the file `manifest.json`.
+// Listen for messages from the content script
+let selectedText = 'empty';
+
+chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+  console.log(message);
+  if (message.type === 'content' && message.content ) {
+    selectedText = await chatGpt(message.content); // Wait for the Promise to resolve
+    console.log(`Selected text: ${selectedText}`);
+    chrome.runtime.sendMessage({type:'background', content: selectedText});
+    // Do something with the selected text
+  } else if (message.type === 'popup') {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {type: 'mouseup', content: 'Hello from the background script!'});
+    });
+    console.log("mouseup!!!")
+  } 
+})
+
